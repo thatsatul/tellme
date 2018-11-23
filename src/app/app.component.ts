@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 // import { SpeechRecognition } from '@ionic-native/speech-recognition';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { CommonService } from './services/common.service';
 
 export class MyPage {
 
   constructor() { }
-
   
 }
 
@@ -18,10 +19,13 @@ export class MyPage {
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  private watch;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    private geolocation: Geolocation,
+    private commonService: CommonService,
     // private speechRecognition: SpeechRecognition
   ) {
     this.initializeApp();
@@ -41,6 +45,17 @@ export class AppComponent {
     //     }
 
     //  });
+    
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log(resp);
+     }).catch((error) => {
+        this.commonService.alert({message: 'Geolocation permission not available'});
+     });
+     
+     this.watch = this.geolocation.watchPosition();
+     this.watch.subscribe((data) => {
+      console.log(data);
+     });
 
   }
 
@@ -51,6 +66,8 @@ export class AppComponent {
     });
   }
 
+  ngOnDestroy() {
+    this.watch.unsubscribe();
+  }
   // Check feature available
-
 }
