@@ -27,14 +27,10 @@
     </ion-item>
     <ion-item *ngFor="let ad of ads">
       <ion-list>
+        <div><ion-img width="80" height="80" src="/assets/images/{{ad.brand}}.jpg"></ion-img></div>
         <ion-item>
-          <ion-avatar slot="start">
-            <img src={{store.icon}} />
-          </ion-avatar>
           <ion-label>
-            <h2>{{ad.name}}</h2>
-            <h3>{{ad.rating}}</h3>
-            <p>{{truncateFun(ad.vicinity)}}</p>
+            <h2>{{ad.brand}}</h2>
           </ion-label>
           <ion-button size="small" (click)="navigateToMaps(ad.geometry.location.lat, ad.geometry.location.lng)">Navigate</ion-button>
         </ion-item>
