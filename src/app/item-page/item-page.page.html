@@ -17,8 +17,9 @@
           <ion-label>
             <h2>{{store.name}}</h2>
             <h3>{{store.rating}}</h3>
-            <p>{{store.vicinity}}</p>
+            <p>{{truncateFun(store.vicinity)}}</p>
           </ion-label>
+          <ion-button size="small" onclick="navigateToMaps(ad.geometry.location.lat, ad.geometry.location.lng)">Navigate</ion-button>
         </ion-item>
       </ion-list>
     </ion-item>
@@ -31,8 +32,9 @@
           <ion-label>
             <h2>{{ad.name}}</h2>
             <h3>{{ad.rating}}</h3>
-            <p>{{ad.vicinity}}</p>
+            <p>{{truncateFun(ad.vicinity)}}</p>
           </ion-label>
+          <ion-button size="small" onclick="navigateToMaps(ad.geometry.location.lat, ad.geometry.location.lng)">Navigate</ion-button>
         </ion-item>
       </ion-list>
     </ion-item>
