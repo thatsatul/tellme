@@ -9,7 +9,7 @@
 <ion-content padding>
   <!-- <ion-button expand="full" (click)="startSpeechReception()">Add Item</ion-button> -->
   <ion-item>
-    <ion-label position="floating" color="primary">Add Wish</ion-label>
+    <ion-label position="floating" color="primary">Add What you Wish For</ion-label>
     <ion-input [(ngModel)]="itemModel"></ion-input>
   </ion-item>
   <ion-button expand="full" (click)="addInputItem()">ADD</ion-button>
@@ -19,21 +19,20 @@
       <ion-row>
         <ion-col>
           <div text-center>
-            <h3>Added Items</h3>
+            <h4>Added Items</h4>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
     <ion-list>
       <ion-item *ngFor="let item of userList">
-        <ion-label>
-          <span (click)="goToItemPage(item)">{{item.itemName}} &nbsp;</span>
-          <span (click)="deleteItem(item)"> X</span>
-        </ion-label>
+        <ion-label (click)="goToItemPage(item)">{{item.itemName}} &nbsp;</ion-label>
+        <ion-button slot="end" color="danger" (click)="deleteItem(item)">
+          X
+        </ion-button>
       </ion-item>
     </ion-list>
-    <ion-button expand="full" fill="outline" (click)="saveItem()">Save List</ion-button>
-    <!-- <ion-button expand="full" fill="outline" (click)="goToItemPage()">Item Page</ion-button> -->
+    <ion-button expand="full" fill="outline" (click)="goToBackground()" color="secondary">Enable Background</ion-button>
   </div>
   <div *ngIf="userList.length <= 0">
     <ion-grid>

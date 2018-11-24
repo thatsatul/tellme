@@ -13,6 +13,8 @@ import { CommonService } from './services/common.service';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { HTTP } from '@ionic-native/http/ngx';
 import { HttpClientModule } from '@angular/common/http';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification/ngx';
 
 
 
@@ -26,7 +28,9 @@ import { HttpClientModule } from '@angular/common/http';
     Geolocation,
     CommonService,
     SpeechRecognition,
+    BackgroundMode,
     HTTP,
+    PhonegapLocalNotification,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

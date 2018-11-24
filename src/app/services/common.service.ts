@@ -16,7 +16,7 @@ export class CommonService {
   selectedItem = null;
 
 	constructor(private alertController: AlertController) {
-    this.userId = "Dipali";
+    this.userId = "atul";
 	}
 
 	async alert(alertObj) {

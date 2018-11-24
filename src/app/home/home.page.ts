@@ -4,6 +4,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { HttpClient } from '@angular/common/http';
 import { CommonService } from '../services/common.service';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @Component({
   selector: 'app-home',
@@ -13,15 +14,15 @@ import { CommonService } from '../services/common.service';
 export class HomePage {
 
   itemModel: string = null;
-  userName = 'Dipali';
   userList: Array<string> = [];
+  loading = null;
 
   constructor(
     private router: Router,
-    private httpCordova: HTTP,
     private http: HttpClient,
     private speechRecognition: SpeechRecognition,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private backgroundMode: BackgroundMode
   ) {
 
   }
@@ -69,6 +70,9 @@ export class HomePage {
   }
 
   addInputItem() {
+    if(!this.itemModel) {
+      return;
+    }
     this.saveItem(this.itemModel);
   }
 
@@ -78,13 +82,17 @@ export class HomePage {
 
   saveItem(item, add?) {
 
-    const postBody = {userid: this.userName, itemName: item, isDone: add == false};
+    const postBody = {userid: this.commonService.userId, itemName: item, isDone: add == false};
     this.http.post("http://10.91.1.84:5000/api/saveitem", postBody, this.commonService.httpOptions)
     .subscribe((res: any) => {
         this.userList = res.data;
         console.log(this.userList);
         this.itemModel = null;
     });
+  }
+
+  goToBackground() {
+    this.backgroundMode.enable();
   }
 
   goToItemPage(item) {
