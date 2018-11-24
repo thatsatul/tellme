@@ -89,4 +89,5 @@
     <plugin name="phonegap-plugin-local-notification" spec="1.0.1" />
     <engine name="android" spec="7.1.4" />
     <engine name="ios" spec="4.5.5" />
+    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="4.2.2" />
 </widget>
