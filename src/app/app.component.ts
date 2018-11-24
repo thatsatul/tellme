@@ -46,7 +46,7 @@ export class AppComponent {
         (error) => {
           console.log(error);
         },
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+        { enableHighAccuracy: false, timeout: 20000, maximumAge: 2000 },
       );
       this.watchID = navigator.geolocation.watchPosition(
         (position) => {
@@ -55,7 +55,7 @@ export class AppComponent {
           position && this.subscribeItemNotifications();
         },
         (error) => alert(error.message),
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+        { enableHighAccuracy: false, timeout: 20000, maximumAge: 2000 },
       );
     } else {
         this.commonService.alert({message: "Please enable geolocation to use this app"});
@@ -78,24 +78,24 @@ export class AppComponent {
       if (!toShowData.name){
         return;
       }
-      this.localNotification.create(toShowData.name, {
-        tag: toShowData.name,
-        body: 'Recommended as per your preference',
-        icon: toShowData.icon
-      });
-      // this.localNotification.requestPermission().then(
-      //   (permission) => {
-      //     console.log('permission', permission);
-      //     if (permission === 'granted') {
-      //       // Create the notification
-      //       this.localNotification.create(toShowData.name, {
-      //         tag: toShowData.name,
-      //         body: 'Recommended as per your preference',
-      //         icon: toShowData.icon
-      //       });
-      //     }
-      //   }
-      // );
+      this.localNotification.requestPermission().then(
+        (permission) => {
+          console.log('permission', permission);
+          if (permission === 'granted') {
+            // Create the notification
+            this.localNotification.create(toShowData.name, {
+              tag: toShowData.name,
+              body: 'Recommended as per your preference',
+              icon: toShowData.icon
+            });
+          }
+        }
+      );
+      // this.commonService.notificationOn = false;
+      // this.commonService.alert({
+      //   header: toShowData.name,
+      //   message: 'Recommended as per your preference',
+      // });
     });
   }
 
