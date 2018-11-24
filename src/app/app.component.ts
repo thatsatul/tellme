@@ -63,12 +63,13 @@ export class AppComponent {
   }
 
   subscribeItemNotifications() {
+    console.log(this.commonService.position);
     this.http.post(
       "http://10.91.1.84:5000/api/getnotification",
       {
         userid: this.commonService.userId,
-        lat: this.commonService.position.latitude,
-        lng: this.commonService.position.longitude,
+        lat: this.commonService.position.coords.latitude,
+        lng: this.commonService.position.coords.longitude,
       },
       this.commonService.httpOptions
     ).subscribe((res: any) => {
@@ -77,19 +78,24 @@ export class AppComponent {
       if (!toShowData.name){
         return;
       }
-      this.localNotification.requestPermission().then(
-        (permission) => {
-          console.log('permission', permission);
-          if (permission === 'granted') {
-            // Create the notification
-            this.localNotification.create('Recommended for you', {
-              tag: toShowData.name,
-              body: 'Nearest visit for you as per your preference',
-              icon: toShowData.icon
-            });
-          }
-        }
-      );
+      this.localNotification.create(toShowData.name, {
+        tag: toShowData.name,
+        body: 'Recommended as per your preference',
+        icon: toShowData.icon
+      });
+      // this.localNotification.requestPermission().then(
+      //   (permission) => {
+      //     console.log('permission', permission);
+      //     if (permission === 'granted') {
+      //       // Create the notification
+      //       this.localNotification.create(toShowData.name, {
+      //         tag: toShowData.name,
+      //         body: 'Recommended as per your preference',
+      //         icon: toShowData.icon
+      //       });
+      //     }
+      //   }
+      // );
     });
   }
 
