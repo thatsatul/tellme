@@ -17,10 +17,13 @@ export class ItemPage implements OnInit {
   ngOnInit() {
     console.log(this.commonService.selectedItem, this.commonService.position);
     const item = this.commonService.selectedItem;
+    if(!this.commonService.position) {
+      return;
+    }
     const postBody = {
       userid: this.commonService.userId,
-      lat: this.commonService.position.latitude,
-      lng: this.commonService.position.longitude,
+      lat: this.commonService.position.coords.latitude,
+      lng: this.commonService.position.coords.longitude,
     }
       let stores = [
           {
