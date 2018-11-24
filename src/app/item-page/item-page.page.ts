@@ -313,7 +313,15 @@ export class ItemPage implements OnInit {
         // this.stores = res.places;
         this.ads = res.ads;
     });
-      this.stores = stores;
+      const byRating = stores.slice(0);
+      byRating.sort(function(a, b) {
+          const y = a.rating;
+          const x = b.rating;
+          return x < y ? -1 : x > y ? 1 : 0;
+      });
+
+      console.log('byRating:', byRating);
+      this.stores = byRating;
   }
 
     truncateFun(text) {
