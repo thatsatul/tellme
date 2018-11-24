@@ -24,6 +24,7 @@
     "@ionic-native/core": "5.0.0-beta.21",
     "@ionic-native/geolocation": "5.0.0-beta.14",
     "@ionic-native/http": "^5.0.0-beta.21",
+    "@ionic-native/launch-navigator": "^5.0.0-beta.21",
     "@ionic-native/phonegap-local-notification": "^5.0.0-beta.21",
     "@ionic-native/speech-recognition": "^5.0.0-beta.21",
     "@ionic-native/splash-screen": "5.0.0-beta.21",
@@ -47,6 +48,7 @@
     "phonegap-plugin-local-notification": "1.0.1",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.2.2",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
@@ -90,7 +92,8 @@
       "cordova-plugin-advanced-http": {},
       "cordova-plugin-geolocation": {},
       "cordova-plugin-background-mode": {},
-      "phonegap-plugin-local-notification": {}
+      "phonegap-plugin-local-notification": {},
+      "uk.co.workingedge.phonegap.plugin.launchnavigator": {}
     },
     "platforms": [
       "android",
