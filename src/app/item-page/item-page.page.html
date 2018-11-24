@@ -6,4 +6,35 @@
 
 <ion-content padding>
   <h3>List ads and stores result here</h3>
+
+  <ion-list>
+    <ion-item *ngFor="let store of stores">
+      <ion-list>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src={{store.icon}} />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{store.name}}</h2>
+            <h3>{{store.rating}}</h3>
+            <p>{{store.vicinity}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-item>
+    <ion-item *ngFor="let ad of ads">
+      <ion-list>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src={{store.icon}} />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ad.name}}</h2>
+            <h3>{{ad.rating}}</h3>
+            <p>{{ad.vicinity}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-item>
+  </ion-list>
 </ion-content>
