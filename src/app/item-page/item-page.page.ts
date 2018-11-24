@@ -50,7 +50,9 @@ export class ItemPage implements OnInit {
     }
 
     navigateToMaps(lat, lng) {
-        this.launchNavigator.navigate('Patna');
-        // window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
+        console.log('lat, lng is----', lat, lng);
+        const destination = lat + ',' + lng;
+        const label = encodeURI('My Label');
+        window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
     }
 }
