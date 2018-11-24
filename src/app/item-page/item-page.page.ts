@@ -325,14 +325,16 @@ export class ItemPage implements OnInit {
   }
 
     truncateFun(text) {
-        console.log('text is----', text);
-        if (text.length > 25) {
-            return text.substring(0, 24) + '...';
+        if (text.length > 40) {
+            return text.substring(0, 39) + '...';
         }
         return text;
     }
 
     navigateToMaps(lat, lng) {
         console.log('lat, lng is----', lat, lng);
+        let destination = lat + ',' + lng;
+        let label = encodeURI('My Label');
+        window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
     }
 }
