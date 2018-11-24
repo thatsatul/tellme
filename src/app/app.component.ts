@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
-// import { SpeechRecognition } from '@ionic-native/speech-recognition';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
+// import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CommonService } from './services/common.service';
+import { HttpClient } from '@angular/common/http';
+
 
 export class MyPage {
 
@@ -19,44 +19,42 @@ export class MyPage {
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  private watch;
+  private watchID;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private geolocation: Geolocation,
+    // private geolocation: Geolocation,
     private commonService: CommonService,
-    // private speechRecognition: SpeechRecognition
+    private http: HttpClient
   ) {
     this.initializeApp();
   }
 
   ngOnInit() {
 
-    // this.speechRecognition.hasPermission()
-    //   .then((hasPermission: boolean) => {
-
-    //     if (!hasPermission) {
-    //     this.speechRecognition.requestPermission()
-    //       .then(
-    //         () => console.log('Granted'),
-    //         () => console.log('Denied')
-    //       )
-    //     }
-
-    //  });
-    
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log(resp);
-     }).catch((error) => {
-        this.commonService.alert({message: 'Geolocation permission not available'});
-     });
-     
-     this.watch = this.geolocation.watchPosition();
-     this.watch.subscribe((data) => {
-      console.log(data);
-     });
-
+    if(!!navigator.geolocation) {
+      // Support
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log("Initial Position", position);
+        },
+        (error) => {
+          console.log(error);
+        },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      );
+      this.watchID = navigator.geolocation.watchPosition(
+        (position) => {
+          console.log("Component last position", position);
+          this.commonService.position = position;
+        },
+        (error) => alert(error.message),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      );
+    } else {
+        this.commonService.alert({message: "Please enable geolocation to use this app"});
+    }
   }
 
   initializeApp() {
@@ -67,7 +65,7 @@ export class AppComponent {
   }
 
   ngOnDestroy() {
-    this.watch.unsubscribe();
+    this.watchID.unsubscribe();
   }
   // Check feature available
 }
