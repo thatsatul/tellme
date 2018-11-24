@@ -38,13 +38,18 @@ export class HomePage {
         )
       }
     });
+
+    this.getUserList();
+  }
+
+  getUserList() {
+    this.http.post("http://10.91.1.84:5000/api/getwishlist?userid=" + this.commonService.userId, {}, this.commonService.httpOptions)
+    .subscribe((res: any) => {
+        this.userList = res.data;
+    });
   }
 
   startSpeechReception() {
-    if(!this.commonService.isDevice) {
-      this.mimicstartSpeechReception();
-      return;
-    }
     this.speechRecognition.startListening()
       .subscribe(
         (matches: Array<string>) => {
@@ -73,24 +78,13 @@ export class HomePage {
 
   saveItem(item, add?) {
 
-    const postBody = {userid: this.userName, itemName: item, isDone: !!!add};
-    if(!this.commonService.isDevice) {
-      this.httpCordova.post("http://10.91.1.84:5000/api/saveitem", postBody, {'Content-Type':  'application/json',})
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    }
-    else {
-      this.http.post("http://10.91.1.84:5000/api/saveitem", postBody, this.commonService.httpOptions)
-      .subscribe((res: any) => {
-          this.userList = res.data;
-          console.log(this.userList);
-          this.itemModel = null;
-      });
-    }
+    const postBody = {userid: this.userName, itemName: item, isDone: add == false};
+    this.http.post("http://10.91.1.84:5000/api/saveitem", postBody, this.commonService.httpOptions)
+    .subscribe((res: any) => {
+        this.userList = res.data;
+        console.log(this.userList);
+        this.itemModel = null;
+    });
   }
 
   goToItemPage(item) {
